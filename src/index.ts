@@ -1,15 +1,19 @@
 import {
   AxesHelper,
+  Clock,
   Color,
   Mesh,
-  MeshBasicMaterial,
   PerspectiveCamera,
   PlaneGeometry,
   Scene,
+  ShaderMaterial,
+  Uniform,
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import "./index.css";
+import floorFragmentShader from "./shader/floor/fragment.glsl?raw";
+import floorVertexShader from "./shader/floor/vertex.glsl?raw";
 
 const el = document.querySelector("#root");
 
@@ -37,10 +41,19 @@ camera.lookAt(scene.position);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
+const clock = new Clock();
+
 // World
+const uniforms = {
+  uTime: new Uniform(0),
+};
+
 const floorGeometry = new PlaneGeometry(10, 5, 128, 128);
-const floorMaterial = new MeshBasicMaterial({
-  wireframe: true,
+const floorMaterial = new ShaderMaterial({
+  uniforms,
+  wireframe: false,
+  vertexShader: floorVertexShader,
+  fragmentShader: floorFragmentShader,
 });
 
 const floor = new Mesh(floorGeometry, floorMaterial);
@@ -52,7 +65,10 @@ const axesHelper = new AxesHelper();
 scene.add(axesHelper);
 
 function render() {
+  // Time
+  const delta = clock.getDelta();
   // Update
+  uniforms.uTime.value += delta;
   controls.update();
   //Render
   renderer.render(scene, camera);
