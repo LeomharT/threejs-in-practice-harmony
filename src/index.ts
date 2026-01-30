@@ -46,6 +46,7 @@ const clock = new Clock();
 // World
 const uniforms = {
   uTime: new Uniform(0),
+  uAspect: new Uniform(10 / 5),
 };
 
 const floorGeometry = new PlaneGeometry(10, 5, 128, 128);
