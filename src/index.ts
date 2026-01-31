@@ -11,6 +11,7 @@ import {
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { Pane } from "tweakpane";
 import "./index.css";
 import floorFragmentShader from "./shader/floor/fragment.glsl?raw";
 import floorVertexShader from "./shader/floor/vertex.glsl?raw";
@@ -47,6 +48,8 @@ const clock = new Clock();
 const uniforms = {
   uTime: new Uniform(0),
   uAspect: new Uniform(10 / 5),
+  uFrequency: new Uniform(1.0),
+  uLineWidth: new Uniform(0.01),
 };
 
 const floorGeometry = new PlaneGeometry(10, 5, 128, 128);
@@ -64,6 +67,24 @@ scene.add(floor);
 // Helpers
 const axesHelper = new AxesHelper();
 scene.add(axesHelper);
+
+// Pane
+const pane = new Pane({ title: "Debug params" });
+pane.element!.parentElement!.style.width = "380px";
+
+const folder_floor = pane.addFolder({ title: "Floor" });
+folder_floor.addBinding(uniforms.uFrequency, "value", {
+  label: "Frequency",
+  min: 0,
+  max: 100.0,
+  step: 0.1,
+});
+folder_floor.addBinding(uniforms.uLineWidth, "value", {
+  label: "Line Width",
+  min: 0,
+  max: 1.0,
+  step: 0.01,
+});
 
 function render() {
   // Time
