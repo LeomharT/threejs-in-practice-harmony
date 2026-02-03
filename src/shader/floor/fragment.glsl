@@ -11,13 +11,14 @@ void main(){
     float lineWidth = uLineWidth;
 
     // uv -= uTime * 0.25;
-    uv.y *= 5.0;
+    // uv.y *= 5.0;
 
     vec2 girdUV = fract(uv);
 
-    float wave  = sin((girdUV.x * uFrequency) + uTime);
-          wave  = wave * 0.5 + 0.5;
- 
+    float wave = sin((girdUV.x * uFrequency) + uTime);
+          wave = wave * 0.5 + 0.5;
+
+     
     if(girdUV.y > wave && girdUV.y < wave + lineWidth){ 
         color = vec3(1.0);
     }

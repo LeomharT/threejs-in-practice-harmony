@@ -48,7 +48,7 @@ const clock = new Clock();
 const uniforms = {
   uTime: new Uniform(0),
   uAspect: new Uniform(10 / 5),
-  uFrequency: new Uniform(1.0),
+  uFrequency: new Uniform(50.0),
   uLineWidth: new Uniform(0.01),
 };
 
