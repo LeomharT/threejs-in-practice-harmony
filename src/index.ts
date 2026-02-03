@@ -49,7 +49,7 @@ const uniforms = {
   uTime: new Uniform(0),
   uAspect: new Uniform(10 / 5),
   uFrequency: new Uniform(50.0),
-  uLineWidth: new Uniform(0.01),
+  uLineWidth: new Uniform(0.001),
 };
 
 const floorGeometry = new PlaneGeometry(10, 5, 128, 128);
@@ -82,8 +82,8 @@ folder_floor.addBinding(uniforms.uFrequency, "value", {
 folder_floor.addBinding(uniforms.uLineWidth, "value", {
   label: "Line Width",
   min: 0,
-  max: 1.0,
-  step: 0.01,
+  max: 0.1,
+  step: 0.0001,
 });
 
 function render() {

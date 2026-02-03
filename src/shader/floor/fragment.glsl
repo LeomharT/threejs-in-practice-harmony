@@ -13,13 +13,18 @@ void main(){
     // uv -= uTime * 0.25;
     // uv.y *= 5.0;
 
-    vec2 girdUV = fract(uv);
+    vec2 gridUV = fract(uv);
 
-    float wave = sin((girdUV.x * uFrequency) + uTime);
+    float x = gridUV.x;
+
+    float wave = sin(gridUV.x * uFrequency + uTime);
           wave = wave * 0.5 + 0.5;
-
      
-    if(girdUV.y > wave && girdUV.y < wave + lineWidth){ 
+    float dydx = cos(x * uFrequency + uTime) * uFrequency;
+
+    float thickness = lineWidth * sqrt(1.0 + dydx * dydx);
+
+    if(abs(gridUV.y - wave) < thickness * 0.5){
         color = vec3(1.0);
     }
 
